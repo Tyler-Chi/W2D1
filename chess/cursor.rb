@@ -26,8 +26,8 @@ KEYMAP = {
 MOVES = {
   left: [0, -1],
   right: [0, 1],
-  up: [-1, 0],
-  down: [1, 0]
+  up: [1, 0],
+  down: [-1, 0]
 }
 
 class Cursor
@@ -44,7 +44,7 @@ class Cursor
     handle_key(key)
   end
 
-  private
+  # private
 
   def read_char
     STDIN.echo = false # stops the console from printing return values
@@ -76,8 +76,36 @@ class Cursor
   end
 
   def handle_key(key)
+    p key
+    case key
+    when :return , :space
+      return @cursor_pos
+    when :left , :right , :up , :down
+      p MOVES[key]
+      sleep(3)
+      update_pos( MOVES[key] )
+
+    when :ctrl_c
+      Process.exit(0)
+    end
+
   end
 
   def update_pos(diff)
+    #right now @cursor position is an Array
+    possible_spots = (0..7).to_a
+
+    possible_row = @cursor_pos.first + diff.first
+    possible_col = @cursor_pos.last + diff.last
+
+    [possible_row, possible_col].each do |el|
+      return false unless possible_spots.include?(el)
+    end
+
+    p @cursor_pos.first
+    p possible_col
+
+    @cursor_pos[0] = possible_row
+    @cursor_pos[-1] = possible_col
   end
 end
