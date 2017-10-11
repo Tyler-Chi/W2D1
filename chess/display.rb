@@ -5,9 +5,9 @@ class Display
 
   attr_accessor :board, :cursor
 
-  def initialize(board)
+  def initialize(board,cursor)
     @board = board
-    @cursor = Cursor.new([0,0], board)
+    @cursor = cursor
   end
 
   def render
@@ -15,12 +15,17 @@ class Display
     (0..7).to_a.reverse.each do |row|
       (0..7).each do |col|
         piece = @board[[row, col]]
-        disp = (piece.class == NullPiece) ? "[ ]" : "[P]"
+        disp = piece.class == NullPiece ? "[ ]" : "[#{piece.symbol}]"
 
         if [row, col] == @cursor.cursor_pos
           print disp.colorize(:red)
-        else
+        elsif piece.color == :yellow
+          print disp
+        elsif piece.color == :white
           print disp.colorize(:blue)
+        elsif piece.color == :black
+          print disp.colorize(:green)
+
         end
       end
 

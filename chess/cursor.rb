@@ -102,8 +102,8 @@ class Cursor
       return false unless possible_spots.include?(el)
     end
 
-    p @cursor_pos.first
-    p possible_col
+    # p @cursor_pos.first
+    # p possible_col
 
     @cursor_pos[0] = possible_row
     @cursor_pos[-1] = possible_col

@@ -4,6 +4,8 @@ require_relative 'nullpiece'
 require_relative 'piece'
 require_relative 'display'
 
-new_board = Board.new
-new_display = Display.new(new_board)
-new_display.render
+A = Board.new
+A.populate
+m = Cursor.new([0,0],A)
+B = Display.new(A,)
+B.render
